@@ -14,7 +14,7 @@ namespace PhishBait
         std::cout << " ___ _    _    _    ___       _ _\n";
         std::cout << "| _ \\ |_ (_)__| |_ | _ ) __ _(_) |_\n";
         std::cout << "|  _/ ' \\| (_-< ' \\| _ \\/ _` | |  _|\n";
-        std::cout << "|_| |_||_|_/__/_||_|___/\\__,_|_|\\__|  " <<  phishBaitVersion << "\n\n\n";
+        std::cout << "|_| |_||_|_|__/_||_|___/\\__,_|_|\\__|  " <<  phishBaitVersion << "\n\n\n";
         std::cout << "[0] Quit\n";
         std::cout << "[1] Open Demo\n";
         std::cout << "\nSelect an option: ";
