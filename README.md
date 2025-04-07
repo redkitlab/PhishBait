@@ -54,7 +54,7 @@ document
 
 1. Visit [Formspree](https://www.formspree.io) and create a new form endpoint. You will be provided with a unique URL that will receive the form submissions.
 
-2. In the provided [HTML code](index.html), replace `<your formspree url>` with the Formspree URL you received. 
+2. In the provided [HTML code](TackleBox/Demo/index.html), replace `<your formspree url>` with the Formspree URL you received. 
 
 ### Try it
 
