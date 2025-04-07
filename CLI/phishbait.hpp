@@ -18,7 +18,19 @@ namespace PhishBait
         std::cout << "[0] Quit\n";
         std::cout << "[1] Open Demo\n";
         std::cout << "\nSelect an option: ";
-        std::cin >> choice;
+        
+        while (true) {
+            if (std::cin >> choice && (choice == 0 || choice == 1))
+            {
+                break;
+            } 
+            else 
+            {
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                std::cout << "Not an option, try again: ";
+            }
+        }
         
         return choice;
     }
