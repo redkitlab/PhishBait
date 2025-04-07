@@ -11,7 +11,6 @@ namespace PhishBait
 
     int homeDisplay(int& choice)
     {
-        const std::string phishBaitVersion;
         std::cout << " ___ _    _    _    ___       _ _\n";
         std::cout << "| _ \\ |_ (_)__| |_ | _ ) __ _(_) |_\n";
         std::cout << "|  _/ ' \\| (_-< ' \\| _ \\/ _` | |  _|\n";
