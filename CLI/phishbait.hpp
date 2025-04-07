@@ -19,12 +19,13 @@ namespace PhishBait
         std::cout << "[1] Open Demo\n";
         std::cout << "\nSelect an option: ";
         
-        while (true) {
+        while (true) 
+        {
             if (std::cin >> choice && (choice == 0 || choice == 1))
             {
                 break;
-            } 
-            else 
+            }
+            else
             {
                 std::cin.clear();
                 std::cin.ignore(10000, '\n');
@@ -34,7 +35,7 @@ namespace PhishBait
         
         return choice;
     }
-    
+
     void openFile(const std::string& file)
     {
         std::string command;
