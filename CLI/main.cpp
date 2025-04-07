@@ -20,7 +20,7 @@ int main()
                 clearTerminal();
                 return 0;
             case 1:
-                openFile("../../TackleBox/Demo/index.html");
+                openFile("../../TackleBox/Demo/demo.html");
                 break;
         }
     }
