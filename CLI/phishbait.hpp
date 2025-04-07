@@ -11,7 +11,6 @@ namespace PhishBait
 
     int homeDisplay(int& choice)
     {
-        const std::string phishBaitVersion;
         std::cout << " ___ _    _    _    ___       _ _\n";
         std::cout << "| _ \\ |_ (_)__| |_ | _ ) __ _(_) |_\n";
         std::cout << "|  _/ ' \\| (_-< ' \\| _ \\/ _` | |  _|\n";
@@ -19,11 +18,24 @@ namespace PhishBait
         std::cout << "[0] Quit\n";
         std::cout << "[1] Open Demo\n";
         std::cout << "\nSelect an option: ";
-        std::cin >> choice;
+        
+        while (true) 
+        {
+            if (std::cin >> choice && (choice == 0 || choice == 1))
+            {
+                break;
+            }
+            else
+            {
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                std::cout << "Not an option, try again: ";
+            }
+        }
         
         return choice;
     }
-    
+
     void openFile(const std::string& file)
     {
         std::string command;

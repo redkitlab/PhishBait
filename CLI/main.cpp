@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "phishbait.hpp"
 
 using namespace PhishBait;
@@ -15,7 +16,7 @@ int main()
         homeDisplay(choice);
         switch(choice)
         {
-            case 0:              
+            case 0:
                 clearTerminal();
                 return 0;
             case 1:
