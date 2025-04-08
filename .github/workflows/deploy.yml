@@ -1,0 +1,24 @@
+name: Deploy Demo to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Copy demo.html and demo.css to publish folder
+        run: |
+          mkdir publish
+          cp TackleBox/Demo/demo.html publish/
+          cp TackleBox/Demo/demo.css publish/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish
