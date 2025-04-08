@@ -1,0 +1,1 @@
+PhishBait's CLI lets you quickly preview HTML files using system commands. All of the HTML files ar located in the [TackleBox](../TackleBox/) directory.
