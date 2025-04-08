@@ -1,32 +1,40 @@
 PLATFORM=$(uname)
 PROJECT_DIR="build"
-cd CLI
-mkdir $PROJECT_DIR
-cd $PROJECT_DIR
+EXECUTABLE_NAME="PhishBait"
+cd CLI || exit 1
+mkdir -p "$PROJECT_DIR" && cd "$PROJECT_DIR" || exit 1
 
-if [ "$PLATFORM" == "Darwin" ]; then
-    cmake ..
-elif [ "$PLATFORM" == "Linux" ]; then
-    cmake ..
-elif [[ "$PLATFORM" == *"NT"* ]]; then
-    if command -v ninja &> /dev/null; then
-        cmake -G "Ninja" ..
+case "$PLATFORM" in
+    Darwin|Linux)
+        EXECUTABLE="./$EXECUTABLE_NAME"
+        cmake ..
+        ;;
+    MINGW*|MSYS*|CYGWIN*|*_NT*)
+        EXECUTABLE="./$EXECUTABLE_NAME.exe"
+        if command -v ninja &>/dev/null; then
+            cmake -G "Ninja" ..
+        else
+            cmake -G "Visual Studio 16 2019" ..
+        fi
+        ;;
+    *)
+        echo "Unsupported platform: $PLATFORM"
+        exit 1
+        ;;
+esac
+
+if [ -f "$EXECUTABLE" ]; then
+    echo "$EXECUTABLE already exists, skipping build."
+else
+    if command -v ninja &>/dev/null; then
+        ninja
     else
-        cmake -G "Visual Studio 16 2019" ..
+        make
     fi
+fi
+
+if [ -f "$EXECUTABLE" ]; then
+    "$EXECUTABLE"
 else
-    echo "Unsupported platform: $PLATFORM"
     exit 1
-fi
-
-if command -v ninja &> /dev/null; then
-    ninja
-else
-    make
-fi
-
-if [ "$PLATFORM" == "Darwin" ] || [ "$PLATFORM" == "Linux" ]; then
-    ./PhishBait
-elif [[ "$PLATFORM" == *"NT"* ]]; then
-    ./PhishBait.exe
 fi
