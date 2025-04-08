@@ -15,7 +15,6 @@ jobs:
         run: |
           mkdir publish
           cp TackleBox/Demo/demo.html publish/
-          cp TackleBox/Demo/demo.css publish/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
