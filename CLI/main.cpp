@@ -4,7 +4,7 @@
 
 using namespace PhishBait;
 
-const std::string PhishBait::phishBaitVersion = "v1.0.0";
+const std::string PhishBait::phishBaitVersion = "v0.0.0";
 
 int main()
 {
