@@ -15,12 +15,13 @@
         </script>
         <style>
             body {
-                background-color: #2d2d2d;
+                background-color: #333;
                 color: #f1f1f1;
                 font-family: Arial, Helvetica, sans-serif;
                 margin: 0;
                 padding: 0;
                 user-select: none;
+                background-attachment: fixed;
             }
 
             .container {
@@ -73,6 +74,10 @@
                 font-size: 0.95rem;
             }
 
+            .paragraph {
+                margin-bottom: 3rem;
+            }
+
             .code-block {
                 margin-bottom: 2rem;
                 border-radius: 8px;
@@ -111,17 +116,17 @@
             }
 
             .download-button {
-                background-color: #1dc328;
+                background: linear-gradient(2deg, #a113d0 1%, #2e72e6 100%);
                 color: white;
                 width: 100%;
-                padding: 0.6rem 1.2rem;
+                padding: 0.6rem;
                 border: none;
                 border-radius: 8px;
                 cursor: pointer;
                 font-size: 1rem;
                 font-weight: bold;
-                margin-top: 2rem;
             }
+
             .download-button:hover {
                 background-color: #1a9f2c;
             }
@@ -225,7 +230,7 @@
 
             <h2>How it works</h2>
             <hr />
-            <p>
+            <p class="paragraph">
                 The page collects input from the user, in this case an email and
                 password.
             </p>
