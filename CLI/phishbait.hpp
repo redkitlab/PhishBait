@@ -16,12 +16,13 @@ namespace PhishBait
         std::cout << "|  _/ ' \\| (_-< ' \\| _ \\/ _` | |  _|\n";
         std::cout << "|_| |_||_|_|__/_||_|___/\\__,_|_|\\__|  " <<  phishBaitVersion << "\n\n\n";
         std::cout << "[0] Quit\n";
-        std::cout << "[1] Open Demo\n";
+        std::cout << "[1] Demo\n";
+        std::cout << "[2] Google\n";
         std::cout << "\nSelect an option: ";
         
         while (true) 
         {
-            if (std::cin >> choice && (choice == 0 || choice == 1))
+            if (std::cin >> choice && (choice >= 0 && choice <= 2))
             {
                 break;
             }

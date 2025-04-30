@@ -22,6 +22,9 @@ int main()
             case 1:
                 openFile("../../TackleBox/Demo/demo.html");
                 break;
+            case 2:
+                openFile("../../TackleBox/Google/googlebait.html");
+                break;
         }
     }
     return 0;
