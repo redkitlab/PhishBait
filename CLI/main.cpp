@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "phishbait.hpp"
+#include "phishbait.h"
 
 using namespace PhishBait;
 
@@ -17,13 +17,14 @@ int main()
         switch(choice)
         {
             case 0:
+                killServer();
                 clearTerminal();
                 return 0;
             case 1:
-                openFile("../../TackleBox/Demo/demo.html");
+                openFile("Demo/demo.html");
                 break;
             case 2:
-                openFile("../../TackleBox/Google/googlebait.html");
+                openFile("Google/googlebait.html");
                 break;
         }
     }
