@@ -1,0 +1,12 @@
+:root {
+    --background: #1e1f20;
+    --section: #0e0e0e;
+    --next-button: #a8c7fa;
+    --next-button-text: #062e6f;
+    --link: #9ebbeb;
+    --text: #e3e3e3;
+}
+
+body {
+    background-color: var(--background);
+}
