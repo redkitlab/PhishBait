@@ -7,6 +7,35 @@
     --text: #e3e3e3;
 }
 
+@font-face {
+    font-family: "Google Sans";
+    src: url("fonts/GoogleSans.woff2") format("woff2");
+}
+
 body {
     background-color: var(--background);
+    color: var(--text);
+    font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+}
+
+html {
+    height: 100%;
+}
+
+#container {
+    width: 1040px;
+    height: 402px;
+    border-radius: 28px;
+    background-color: var(--section);
+}
+
+#footer {
+    height: 64px;
+    width: 1008px;
 }
